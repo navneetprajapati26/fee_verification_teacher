@@ -17,7 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetStudentById>(_onGetStudentById);
     on<UpdateStudent>(_onUpdateStudent);
     on<GetAllFeeReceipts>(_onGetAllFeeReceipts);
-    on<GetFeeReceiptById>(_onGetFeeReceiptById);
+    on<GetFeeReceiptByIds>(_onGetFeeReceiptById);
     on<UpdateFeeReceipt>(_onUpdateFeeReceipt);
   }
 
@@ -62,11 +62,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  Future<void> _onGetFeeReceiptById(GetFeeReceiptById event, Emitter<HomeState> emit) async {
+  Future<void> _onGetFeeReceiptById(GetFeeReceiptByIds event, Emitter<HomeState> emit) async {
     emit(state.copyWith(status: HomeStateStatus.loading));
     try {
-      final feeReceipt = await homeRepository.getFeeReceiptById(event.receiptId);
-      emit(state.copyWith(status: HomeStateStatus.loaded, feeReceiptList: feeReceipt != null ? [feeReceipt] : []));
+      final feeReceipt = await homeRepository.getFeeReceiptsByIds( feeReceiptIds:event.receiptId);
+
+      emit(state.copyWith(status: HomeStateStatus.loaded, feeReceiptList: feeReceipt ));
     } catch (e) {
       emit(state.copyWith(status: HomeStateStatus.error, errorMessage: e.toString()));
     }

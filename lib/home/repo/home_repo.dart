@@ -65,6 +65,20 @@ class HomeRepository {
     return null;
   }
 
+  Future<List<FeeReceiptModel>> getFeeReceiptsByIds({required List<String> feeReceiptIds}) async {
+    List<FeeReceiptModel> feeReceipts = [];
+
+    for (String id in feeReceiptIds) {
+      FeeReceiptModel? feeReceipt = await getFeeReceiptById(id);
+      if (feeReceipt != null) {
+        feeReceipts.add(feeReceipt);
+      }
+    }
+
+    return feeReceipts;
+  }
+
+
   Future<void> updateFeeReceipt(FeeReceiptModel feeReceiptModel) async {
     if (feeReceiptModel.id == null) {
       throw Exception('Fee receipt ID is null');

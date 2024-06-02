@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-showPopUp({required BuildContext context, List<Widget>? children}){
+showPopUp({required BuildContext context, List<Widget>? children, double? width = 800 }){
 
   showDialog(
     context: context,
@@ -12,7 +12,7 @@ showPopUp({required BuildContext context, List<Widget>? children}){
           borderRadius: BorderRadius.circular(25.0),
         ),
         child: Container(
-          width: 800,
+          width: width,
           padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,

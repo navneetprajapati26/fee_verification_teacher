@@ -27,10 +27,11 @@ class UpdateStudent extends HomeEvent {
 
 
 class GetAllFeeReceipts extends HomeEvent {}
-class GetFeeReceiptById extends HomeEvent {
-  final String receiptId;
 
-  GetFeeReceiptById({
+class GetFeeReceiptByIds extends HomeEvent {
+  final List<String> receiptId;
+
+  GetFeeReceiptByIds({
     required this.receiptId,
   });
 

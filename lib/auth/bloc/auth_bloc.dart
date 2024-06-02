@@ -40,7 +40,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         id: userCredential.user!.uid,
         email: event.email,
         facultyName: event.facultyName,
-        receiptType: event.receiptType,
+        facultyType: event.facultyType,
+        facultyAssociateWith: event.facultyAssociateWith
 
       );
 

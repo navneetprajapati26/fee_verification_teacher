@@ -1,6 +1,9 @@
 import 'package:fee_verification_teacher/home/screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../constance/constents.dart';
+import '../../utils/dropdown_button.dart';
+import '../../utils/not_veryfyed.dart';
 import '../bloc/auth_bloc.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -15,7 +18,8 @@ class _AuthScreenState extends State<AuthScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _facultyNameController = TextEditingController();
-  final _receiptTypeController = TextEditingController();
+  late final String _facultyType;
+  late final String _facultyAssociateWith;
   bool _isLogin = false;
 
   bool _isPasswordHidden = true;
@@ -31,7 +35,6 @@ class _AuthScreenState extends State<AuthScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _facultyNameController.dispose();
-    _receiptTypeController.dispose();
     super.dispose();
   }
 
@@ -51,9 +54,17 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
             );
           }
-          if (state.status == AuthStateStatus.login ) {
-            Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+          if (state.status == AuthStateStatus.login  ) {
+            if(state.user!.isFacultyVerified == null || state.user!.isFacultyVerified! == false ){
+              Navigator.of(context).pushReplacementNamed(NotVeryfyed.routeName);
+            }else{
+              Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+
+            }
           }
+          // if (state.status == AuthStateStatus.login && (state.user!.isFacultyVerified != null || state.user!.isFacultyVerified!) ) {
+          //   Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+          // }
           if (state.status == AuthStateStatus.register) {
             _isLogin = true;
           }
@@ -99,13 +110,38 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                     ),
                     SizedBox(height: 16.0),
-                    SizedBox(height: 16.0),
-                    TextField(
-                      controller: _receiptTypeController,
-                      decoration: InputDecoration(
-                        labelText: 'Receipt Type',
-                      ),
+
+                    CustomDropdownButton(
+                      items:ListConstent.facultyType,
+                      hint: 'Select fee Type',
+                      onChanged: (value) {
+
+                        setState(() {
+                          _facultyType = value!;
+                        });
+
+                        print('Selected: $_facultyType');
+
+
+                      },
                     ),
+                    SizedBox(height: 16.0),
+
+                    CustomDropdownButton(
+                      items:ListConstent.facultyAssociateWith,
+                      hint: 'Select faculty Associate With',
+                      onChanged: (value) {
+
+                        setState(() {
+                          _facultyAssociateWith = value!;
+                        });
+
+                        print('Selected: $_facultyType');
+
+
+                      },
+                    ),
+
 
                   ],
                   SizedBox(height: 16.0),
@@ -124,7 +160,8 @@ class _AuthScreenState extends State<AuthScreen> {
                             email: _emailController.text.trim(),
                             password: _passwordController.text.trim(),
                             facultyName: _facultyNameController.text.trim(),
-                            receiptType: _receiptTypeController.text.trim(),
+                            facultyType: _facultyType,
+                            facultyAssociateWith: _facultyAssociateWith
 
                           ),
                         );

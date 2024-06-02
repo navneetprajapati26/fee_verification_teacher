@@ -1,8 +1,10 @@
 import 'package:fee_verification_teacher/home/bloc/home_bloc.dart';
+import 'package:fee_verification_teacher/home/screen/all_fee_receipt.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../main.dart';
 import '../../utils/pop-up.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,6 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
+
+
           if (state.status == HomeStateStatus.loading) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -41,28 +45,34 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (context, index) {
                         return ListTile(
                           onTap: () {
-                            showPopUp(context: context, children: [
-                              Text(state.studentList![index].username),
-                              Text(state.studentList![index].studentRollNo),
-                              Text(state.studentList![index].studentYear),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              TextButton(
-                                child: Text("Verify this student"),
-                                onPressed: () {
-                                  context.read<HomeBloc>().add(UpdateStudent(
-                                      studentModel: state.studentList![index]
-                                          .copyWith(isStudentVerified: true)));
-                                  Navigator.of(context).pop();
-                                },
-                              )
+                            // showPopUp(context: context, children: [
+                            //   Text(state.studentList![index].yearOfAdmission),
+                            //   Text(state.studentList![index].studentRollNo),
+                            //   Text(state.studentList![index].studentYear),
+                            //   SizedBox(
+                            //     height: 30,
+                            //   ),
+                            //   TextButton(
+                            //     child: Text("Verify this student"),
+                            //     onPressed: () {
+                            //       context.read<HomeBloc>().add(UpdateStudent(
+                            //           studentModel: state.studentList![index]
+                            //               .copyWith(isStudentVerified: true)));
+                            //       Navigator.of(context).pop();
+                            //     },
+                            //   )
+                            //
+                            //   // for (int i = 0; i < state.studentList![index].studentFeeReceiptsIdList!.length; i++)
+                            //   //   Text(state.studentList![index].studentFeeReceiptsIdList![i])
+                            // ]);
 
-                              // for (int i = 0; i < state.studentList![index].studentFeeReceiptsIdList!.length; i++)
-                              //   Text(state.studentList![index].studentFeeReceiptsIdList![i])
-                            ]);
+                            Navigator.pushNamed(
+                              context,
+                              AllFeeReceipt.routeName,
+                              arguments: AllFeeReceiptArguments(state.studentList![index].studentFeeReceiptsIdList!),
+                            );
                           },
-                          title: Text(state.studentList![index].username),
+                          title: Text(state.studentList![index].yearOfAdmission),
                           subtitle: Text(
                               "Roll No ${state.studentList![index].studentRollNo} Branch :-  ${state.studentList![index].studentBranch}"),
                           leading: InkWell(
