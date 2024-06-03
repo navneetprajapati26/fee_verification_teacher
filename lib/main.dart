@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => AuthBloc(authRepository: AuthRepository())),
         BlocProvider(
-            create: (context) => HomeBloc(homeRepository: HomeRepository())),
+            create: (context) => HomeBloc(homeRepository: HomeRepository(),authRepository: AuthRepository())),
         // Add more BlocProviders as needed
       ],
       child: MaterialApp(

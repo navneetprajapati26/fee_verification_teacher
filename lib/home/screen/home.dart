@@ -89,9 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               UpdateStudent(
                                                   studentModel: state
                                                       .studentList![index]
-                                                      .copyWith(
-                                                          isStudentVerified:
-                                                              true)));
+                                                      .copyWith(isStudentVerified: true)));
                                           Navigator.of(context).pop();
                                         },
                                       )

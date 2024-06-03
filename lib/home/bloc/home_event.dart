@@ -27,7 +27,6 @@ class UpdateStudent extends HomeEvent {
 
 
 class GetAllFeeReceipts extends HomeEvent {}
-
 class GetFeeReceiptByIds extends HomeEvent {
   final List<String> receiptId;
 
@@ -37,10 +36,14 @@ class GetFeeReceiptByIds extends HomeEvent {
 
 }
 class UpdateFeeReceipt extends HomeEvent {
-  final String receiptId;
 
-  UpdateFeeReceipt({
+  final List<String> receiptId;
+
+  final FeeReceiptModel feeReceiptModel;
+
+   UpdateFeeReceipt({
     required this.receiptId,
+    required this.feeReceiptModel,
   });
 }
 

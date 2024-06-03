@@ -53,7 +53,36 @@ class _AllFeeReceiptState extends State<AllFeeReceipt> {
                 itemCount: state.feeReceiptList!.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    leading: leadingIcon(state.feeReceiptList![index].receiptStatus!),
+                    leading: PopupMenuButton<String>(
+                        onSelected: (value) {
+                      // Handle the selected menu item
+                      print('Selected: $value');
+
+                      if(value == ListConstent.feeReceiptStatus[0]) {
+                        context.read<HomeBloc>().add(UpdateFeeReceipt(receiptId: widget.feeReceiptIds,feeReceiptModel: state.feeReceiptList![index].copyWith(receiptStatus: ListConstent.feeReceiptStatus[0], receiptVerifiedBy: "Receipt verified by ${state.facultyModel!.facultyName} (${state.facultyModel!.facultyAssociateWith})")));
+                      }if(value == ListConstent.feeReceiptStatus[1]) {
+                        context.read<HomeBloc>().add(UpdateFeeReceipt(receiptId: widget.feeReceiptIds,feeReceiptModel: state.feeReceiptList![index].copyWith(receiptStatus: ListConstent.feeReceiptStatus[1],receiptVerifiedBy: "Receipt verified by ${state.facultyModel!.facultyName} (${state.facultyModel!.facultyAssociateWith})" )));
+                      }if(value == ListConstent.feeReceiptStatus[2]) {
+                        context.read<HomeBloc>().add(UpdateFeeReceipt(receiptId: widget.feeReceiptIds,feeReceiptModel: state.feeReceiptList![index].copyWith(receiptStatus: ListConstent.feeReceiptStatus[2],receiptVerifiedBy: "Receipt verified by ${state.facultyModel!.facultyName} (${state.facultyModel!.facultyAssociateWith})" )));
+                      }
+                    },
+                        itemBuilder: (BuildContext context) {
+                          return [
+                            PopupMenuItem<String>(
+                              value: ListConstent.feeReceiptStatus[0],
+                              child: Text('${ListConstent.feeReceiptStatus[0]}',style: TextStyle(color: Colors.black),),
+                            ),
+                            PopupMenuItem<String>(
+                              value: ListConstent.feeReceiptStatus[1],
+                              child: Text(ListConstent.feeReceiptStatus[1],style: TextStyle(color: Colors.green),),
+                            ),
+                            PopupMenuItem<String>(
+                              value: ListConstent.feeReceiptStatus[2],
+                              child: Text(ListConstent.feeReceiptStatus[2],style: TextStyle(color: Colors.red),),
+                            ),
+                          ];
+                        },
+                        child: leadingIcon(state.feeReceiptList![index].receiptStatus!)),
                     title: Text(state.feeReceiptList![index].receiptType!),
                     subtitle: Text("${state.feeReceiptList![index].receiptYear!} ${state.feeReceiptList![index].receiptStatus!}"),
                     onTap: (){
@@ -91,13 +120,13 @@ class _AllFeeReceiptState extends State<AllFeeReceipt> {
 
   Widget leadingIcon(String? receiptStatus) {
 
-    if(receiptStatus == ListConstent.FeeReceiptStatus[0]){
+    if(receiptStatus == ListConstent.feeReceiptStatus[0]){
       return Container(decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.yellow),child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: const Icon(Icons.padding_outlined,color: Colors.black,),
       ));
     }
-    if(receiptStatus == ListConstent.FeeReceiptStatus[1]){
+    if(receiptStatus == ListConstent.feeReceiptStatus[1]){
       return Container(
         decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.green),
         child: Padding(
@@ -106,7 +135,7 @@ class _AllFeeReceiptState extends State<AllFeeReceipt> {
         ),
       );
     }
-    if(receiptStatus == ListConstent.FeeReceiptStatus[2]){
+    if(receiptStatus == ListConstent.feeReceiptStatus[2]){
       return Container(
         decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.red),
         child: Padding(
