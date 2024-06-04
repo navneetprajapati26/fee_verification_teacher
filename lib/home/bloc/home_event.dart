@@ -47,3 +47,25 @@ class UpdateFeeReceipt extends HomeEvent {
   });
 }
 
+class DoFilterByBranch extends HomeEvent {
+  final String branch;
+
+   DoFilterByBranch({
+    required this.branch,
+  });
+}
+class DoFilterByYear extends HomeEvent {
+  final String year;
+
+  DoFilterByYear({
+    required this.year,
+  });
+}
+class DoFilterByQuery  extends HomeEvent {
+  final String query;
+
+  DoFilterByQuery({
+    required this.query,
+  });
+}
+

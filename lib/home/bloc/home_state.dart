@@ -5,6 +5,7 @@ enum HomeStateStatus {
   initial,
   loading,
   loaded,
+  filter,
   error,
   connectivityError,
 }

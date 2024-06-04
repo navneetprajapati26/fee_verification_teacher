@@ -50,7 +50,7 @@ class StudentModel {
       studentRollNo: map['studentRollNo'] as String? ?? '',
       studentYear: map['studentYear'] as String? ?? '',
       studentBranch: map['studentBranch'] as String? ?? '',
-      isStudentVerified: map['isStudentVerified'] as bool? ?? false,
+      isStudentVerified: map['isStudentVerified'] as bool,
       studentFeeReceiptsIdList: (map['studentFeeReceiptsIdList'] as List<dynamic>?)?.map((item) => item as String).toList() ?? [],
     );
   }

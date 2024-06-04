@@ -22,6 +22,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetAllFeeReceipts>(_onGetAllFeeReceipts);
     on<GetFeeReceiptByIds>(_onGetFeeReceiptById);
     on<UpdateFeeReceipt>(_onUpdateFeeReceipt);
+    on<DoFilterByBranch>(_onDoFilterByBranch);
+    on<DoFilterByYear>(_onDoFilterByYear);
+    on<DoFilterByQuery>(_onDoFilterByQuery);
   }
 
   Future<void> _onGetAllStudent(GetAllStudent event, Emitter<HomeState> emit) async {
@@ -95,4 +98,38 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(status: HomeStateStatus.error, errorMessage: e.toString()));
     }
   }
+
+  Future<void> _onDoFilterByBranch(DoFilterByBranch event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(status: HomeStateStatus.loading));
+    try {
+      final filteredStudents = state.studentList?.where((student) => student.studentBranch.toLowerCase() == event.branch.toLowerCase()).toList();
+      emit(state.copyWith(status: HomeStateStatus.filter, filteredStudentList: filteredStudents));
+    } catch (e) {
+      emit(state.copyWith(status: HomeStateStatus.error, errorMessage: e.toString()));
+    }
+  }
+
+  Future<void> _onDoFilterByYear(DoFilterByYear event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(status: HomeStateStatus.loading));
+    try {
+      final filteredStudents = state.studentList?.where((student) => student.studentYear == event.year).toList();
+      emit(state.copyWith(status: HomeStateStatus.filter, filteredStudentList: filteredStudents));
+    } catch (e) {
+      emit(state.copyWith(status: HomeStateStatus.error, errorMessage: e.toString()));
+    }
+  }
+
+  Future<void> _onDoFilterByQuery(DoFilterByQuery event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(status: HomeStateStatus.loading));
+    try {
+      final filteredStudents = state.studentList?.where((student) =>
+      student.studentName.toLowerCase().contains(event.query.toLowerCase()) || student.studentRollNo.toLowerCase().contains(event.query.toLowerCase())
+      ).toList();
+      emit(state.copyWith(status: HomeStateStatus.filter, filteredStudentList: filteredStudents));
+    } catch (e) {
+      emit(state.copyWith(status: HomeStateStatus.error, errorMessage: e.toString()));
+    }
+  }
+
+
 }

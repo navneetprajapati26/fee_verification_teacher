@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 class YearPickerWidget extends StatefulWidget {
   final int startYear;
   final int endYear;
+  final double? width;
+  final EdgeInsetsGeometry? padding;
+  final BoxBorder? border;
   final Function(int?) onYearChanged;
 
   YearPickerWidget({
     required this.startYear,
     required this.endYear,
+    this.width,
+    this.padding,
+    this.border,
     required this.onYearChanged,
   });
 
@@ -26,12 +32,13 @@ class _YearPickerWidgetState extends State<YearPickerWidget> {
     );
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      width: widget.width,
+     padding: widget.padding ?? EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(
+        border: widget.border ?? Border.all(
           color: Colors.grey,
-          width: 1,
+          width: 0,
         ),
       ),
       child: DropdownButtonHideUnderline(
